@@ -1,28 +1,26 @@
-version: "3"
-
+version: '3'
 services:
-  mysqldb:
+  database:
     image: mysql
-    container_name: mysqldb
-    restart: unless-stopped
+    container_name: mysql
     environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=1
-      - MYSQL_DATABASE=achatdb
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: examenfacture   
     ports:
       - 3306:3306
-    volumes:
-      - db:/var/lib/mysql
-  app:
-    depends_on:
-      - mysqldb
-    image: root9root/achat:latest
-    restart: on-failure
+    networks:
+     - AppNet
+     
+  spring-boot:
+    image: nour/achat:latest
+    container_name: spring
     ports:
-      - 8089:8089
-    volumes:
-      - .m2:/root/.m2
-    stdin_open: true
-    tty: true
-
-volumes:
-  db:
+      - 8082:8082
+    depends_on:
+      - database
+    networks:
+      - AppNet 
+    restart: on-failure
+networks:
+  AppNet:
+    driver: bridge
