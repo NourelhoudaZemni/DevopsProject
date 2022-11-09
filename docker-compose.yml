@@ -12,7 +12,7 @@ services:
      - AppNet
      
   spring-boot:
-    image: nour/achat:latest
+    image: root9root/achat
     container_name: spring
     ports:
       - 8082:8082
