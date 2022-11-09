@@ -15,7 +15,7 @@ services:
   app:
     depends_on:
       - mysqldb
-    image: root9root/achat
+    image: root9root/achat:latest
     restart: on-failure
     ports:
       - 8089:8089
